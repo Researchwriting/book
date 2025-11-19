@@ -1,0 +1,7 @@
+{
+    "email_enabled": true,
+    "email_to": "user@example.com",
+    "email_from": "user@example.com",
+    "email_password": "YOUR_APP_PASSWORD_HERE",
+    "backup_enabled": false
+}

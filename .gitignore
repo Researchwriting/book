@@ -1,0 +1,15 @@
+# Python
+__pycache__/
+*.pyc
+venv/
+.env
+
+# Configuration with keys
+src/config.py
+notification_config.json
+
+# Output
+output/
+test_output/
+state.json
+state_mock.json
