@@ -95,7 +95,7 @@ async function loadSections() {
 
         let actionBtn = '';
         if (s.status === 'complete') {
-            actionBtn = `<button class="btn-download">Download</button>`;
+            actionBtn = `<a href="${API_URL}/download/${s.section_number}" class="btn-download" target="_blank">Download</a>`;
         } else if (isGenerating) {
             actionBtn = `<button class="btn-generate" disabled>Wait</button>`;
         } else {

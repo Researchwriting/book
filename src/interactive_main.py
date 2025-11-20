@@ -146,11 +146,19 @@ def generate_section(generator, section_info, section_idx, total_sections):
         
         # Introduction
         print(f"      📝 [0/{total_subsections}] Writing introduction...")
+        
+        # Update Progress Tracker
+        progress_tracker.update_subsection(section_num, "Introduction")
+        
         intro = write_section_introduction(generator, section_title, topics)
         f.write(intro + "\n\n")
         f.flush()
         word_count = len(intro.split())
         completed_subsections += 1
+        
+        # Update Progress Tracker
+        progress_tracker.complete_subsection(section_num, word_count)
+        
         elapsed = time.time() - section_start_time
         avg_time_per_part = elapsed / completed_subsections
         remaining_parts = total_subsections - completed_subsections

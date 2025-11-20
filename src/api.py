@@ -2,6 +2,7 @@ import os
 import threading
 import time
 from fastapi import FastAPI, BackgroundTasks, HTTPException
+from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
@@ -118,6 +119,26 @@ def run_generation(section_info):
 def get_progress():
     # Return data from progress_tracker
     return progress_tracker.sections
+
+@app.get("/api/download/{section_number}")
+def download_section(section_number: str):
+    sections = parse_syllabus("syllabus.md")
+    target_section = next((s for s in sections if s['section_number'] == section_number), None)
+    
+    if not target_section:
+        raise HTTPException(status_code=404, detail="Section not found")
+    
+    filename = f"output/Section_{section_number}_{target_section['section_title'].replace(' ', '_')}.md"
+    docx_filename = filename.replace('.md', '.docx')
+    
+    # Prefer DOCX if available
+    if os.path.exists(docx_filename):
+        return FileResponse(docx_filename, filename=os.path.basename(docx_filename))
+    elif os.path.exists(filename):
+        return FileResponse(filename, filename=os.path.basename(filename))
+    else:
+        raise HTTPException(status_code=404, detail="File not generated yet")
+
 
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8000)
