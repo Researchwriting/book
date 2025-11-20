@@ -19,6 +19,7 @@ from src.resume_manager import resume_manager
 from src.parallel_generator import ParallelGenerator
 from src.model_switcher import switch_model, get_current_model, compare_costs
 from src.auto_notifier import AutoNotifier, load_notification_config
+from src.progress_tracker import progress_tracker
 
 def clear_screen():
     os.system('clear' if os.name != 'nt' else 'cls')
@@ -131,6 +132,10 @@ def generate_section(generator, section_info, section_idx, total_sections):
         total_subsections = sum(len(t.subsections) for t in topics)
         print(f"        ✅ Structure ready ({len(topics)} topics, {total_subsections} subsections) - took {int(elapsed)}s")
         
+        # Initialize Progress Tracker
+        progress_tracker.start_section(section_num, section_title, total_subsections + 2)
+
+        
         # Step 3: Write content
         print(f"  [2/4] ✍️  Writing content...\n")
         
@@ -225,6 +230,10 @@ def generate_section(generator, section_info, section_idx, total_sections):
                             remaining_parts = total_subsections - completed_subsections
                             est_remaining = int(avg_time_per_part * remaining_parts / 60)
                             progress_pct = int(completed_subsections/total_subsections*100)
+                            
+                            # Update Progress Tracker
+                            progress_tracker.update_subsection(section_num, result['title'])
+                            progress_tracker.complete_subsection(section_num, len(result['content'].split()))
                             
                             print(f"         ✅ [{completed_subsections}/{total_subsections}] {result['title'][:50]}... ({len(result['content'].split())} words) | {progress_pct}% | ~{est_remaining}min left")
                     

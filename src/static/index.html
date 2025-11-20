@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Textbook Generator</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo">
+                <h1>📚 AI Author</h1>
+            </div>
+            
+            <div class="status-card">
+                <h3>System Status</h3>
+                <div class="status-indicator">
+                    <span class="dot" id="system-dot"></span>
+                    <span id="system-text">Ready</span>
+                </div>
+                <div class="model-info">
+                    <small>Model:</small>
+                    <strong id="current-model">Loading...</strong>
+                </div>
+            </div>
+
+            <nav class="nav-menu">
+                <button class="nav-btn active" onclick="showView('dashboard')">Dashboard</button>
+                <button class="nav-btn" onclick="showView('sections')">Sections</button>
+                <button class="nav-btn" onclick="showView('settings')">Settings</button>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Dashboard View -->
+            <div id="dashboard-view" class="view active">
+                <header>
+                    <h2>Dashboard</h2>
+                    <div class="actions">
+                        <button class="btn-primary" onclick="refreshData()">Refresh</button>
+                    </div>
+                </header>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <h3>Total Progress</h3>
+                        <div class="progress-circle" id="total-progress" style="--p:0">
+                            <span>0%</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Total Words</h3>
+                        <p class="stat-value" id="total-words">0</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Completed Sections</h3>
+                        <p class="stat-value" id="completed-count">0/0</p>
+                    </div>
+                </div>
+
+                <div class="active-task-container" id="active-task" style="display: none;">
+                    <h3>⚡ Currently Generating</h3>
+                    <div class="task-card">
+                        <div class="task-header">
+                            <h4 id="current-section-title">Section Title</h4>
+                            <span class="badge generating">Generating</span>
+                        </div>
+                        <div class="progress-bar-container">
+                            <div class="progress-bar" id="current-progress-bar" style="width: 0%"></div>
+                        </div>
+                        <p class="task-detail" id="current-subsection">Initializing...</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sections View -->
+            <div id="sections-view" class="view">
+                <header>
+                    <h2>Manage Sections</h2>
+                </header>
+                <div class="sections-list" id="sections-list">
+                    <!-- Sections injected here -->
+                </div>
+            </div>
+
+            <!-- Settings View -->
+            <div id="settings-view" class="view">
+                <header>
+                    <h2>Settings</h2>
+                </header>
+                <div class="settings-form">
+                    <div class="form-group">
+                        <label>API Key (DeepSeek)</label>
+                        <input type="password" id="api-key" placeholder="sk-...">
+                    </div>
+                    <button class="btn-primary" onclick="saveSettings()">Save Settings</button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="/static/app.js"></script>
+</body>
+</html>
