@@ -1,0 +1,35 @@
+import os
+
+class Config:
+    # API Keys - REPLACE WITH YOUR OWN
+    DEEPSEEK_API_KEY = "your-deepseek-api-key-here"
+    
+    # Gemini API Keys (backup) - REPLACE WITH YOUR OWN
+    GEMINI_API_KEYS = [
+        "your-gemini-api-key-1",
+        "your-gemini-api-key-2",
+        "your-gemini-api-key-3"
+    ]
+    
+    SEMANTIC_SCHOLAR_API_KEY = "your-semantic-scholar-api-key"
+    TAVILY_API_KEY = "your-tavily-api-key"
+    
+    # Model Settings
+    PROVIDER = "deepseek"  # Using DeepSeek as primary
+    MODEL_NAME = "deepseek-chat"
+    
+    # Generation Settings
+    TARGET_WORD_COUNT_TOTAL = 150000
+    
+    # Paths
+    OUTPUT_DIR = "thesis/output"
+    
+    # Email Settings (Configure these for email notifications)
+    EMAIL_ENABLED = False  # Set to True to enable email notifications
+    EMAIL_ADDRESS = ""  # Your Gmail address
+    EMAIL_PASSWORD = ""  # Your Gmail app password (not regular password)
+    RECIPIENT_EMAIL = ""  # Where to send notifications
+
+    @staticmethod
+    def get_api_key(name):
+        return getattr(Config, name, None)
